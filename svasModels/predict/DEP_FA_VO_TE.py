@@ -134,4 +134,4 @@ def get_depression_level():
 
     return normalized_sad
 
-get_depression_level()
+# get_depression_level()

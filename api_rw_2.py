@@ -3,7 +3,9 @@ import os
 from flask_cors import CORS
 import time
 
-from svasModels import ANX_FA_VO
+import handler
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -43,17 +45,13 @@ def remove_files():
 
 @app.route('/update/<case>', methods=['POST'])
 def upload_files(case):
-
-    switch = {
-        1: "ANX_FA_VO",
-        2: "DEP_FA_VO_TE",
-    }
-
-
     audio_blob = request.files.get('audioData') #Can be both val and null
     image_blob = request.files.get('imageData') #Can be both val and null
     #video_blob = request.files.get('videoData') #Can be both val and null
     textData = request.form.get('textData')
+    # print(case)
+    # print(type(case))
+    # handler.test_type(1,1)
 
     if not audio_blob or not image_blob or (textData == "null"):
         if ((audio_blob == None) and image_blob and (textData != "null")):
@@ -63,7 +61,9 @@ def upload_files(case):
             text_filename = 'text.txt'
             image_file_path = save_blob_as_file(image_blob.read(), image_filename)
             text_file_path = save_text(textData, text_filename)
-            return jsonify({'message': f'{audio_blob} for audio selected, files saved'})
+            print("1")
+            prob = handler.test_type(case,7)
+            return jsonify({'message': f"{prob}"})
         elif ((image_blob == None) and audio_blob and (textData != "null")):
             remove_files()
             time.sleep(2)
@@ -71,7 +71,9 @@ def upload_files(case):
             text_filename = 'text.txt'
             audio_file_path = save_blob_as_file(audio_blob.read(), audio_filename)
             text_file_path = save_text(textData, text_filename)
-            return jsonify({'message': f'{image_blob} for image selected, files saved'})
+            print("2")
+            prob = handler.test_type(case,6)
+            return jsonify({'message': f"{prob}"})
         elif ((textData == "null") and audio_blob and image_blob):
             remove_files()
             time.sleep(2)
@@ -79,25 +81,33 @@ def upload_files(case):
             image_filename = 'image.png'
             audio_file_path = save_blob_as_file(audio_blob.read(), audio_filename)
             image_file_path = save_blob_as_file(image_blob.read(), image_filename)
-            return jsonify({'message': f'{textData} for text selected, files saved'})
+            print("3")
+            prob = handler.test_type(case,1)
+            return jsonify({'message': f"{prob}"})
         elif ((audio_blob == None) and (image_blob == None) and (textData != "null")):
             remove_files()
             time.sleep(2)
             text_filename = 'text.txt'
             text_file_path = save_text(textData, text_filename)
-            return jsonify({'message': f'{audio_blob} for audio and {image_blob} for image selected, files saved'})
+            print("4")
+            prob = handler.test_type(case,5)
+            return jsonify({'message': f"{prob}"})
         elif ((audio_blob == None) and image_blob and (textData == "null")):
             remove_files()
             time.sleep(2)
             image_filename = 'image.png'
             image_file_path = save_blob_as_file(image_blob.read(), image_filename)
-            return jsonify({'message': f'{audio_blob} for audio and {textData} for text selected, files saved'})
+            print("5")
+            prob = handler.test_type(case,3)
+            return jsonify({'message': f"{prob}"})
         elif ((audio_blob and (image_blob == None) and (textData == "null"))):
             remove_files()
             time.sleep(2)
             audio_filename = 'audio.wav'
             audio_file_path = save_blob_as_file(audio_blob.read(), audio_filename)
-            return jsonify({'message': f'{image_blob} for image and {textData} for text selected, files saved'})
+            print("6")
+            prob = handler.test_type(case,2)
+            return jsonify({'message': f"{prob}"})
 
     audio_filename = 'audio.wav'
     image_filename = 'image.png'
@@ -111,7 +121,9 @@ def upload_files(case):
     text_file_path = save_text(textData, text_filename)
 
     if audio_file_path and image_file_path and text_file_path:
-        return jsonify({'message': ANX_FA_VO.get_anxiety_level()}), 200
+        print("7")
+        prob = handler.test_type(case,4)
+        return jsonify({'message': f"{prob}"}), 200
     else:
         return jsonify({'error': 'Failed to upload files'}), 500
     
