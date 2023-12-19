@@ -11,7 +11,7 @@ def test_type(type,opt):
             return (FACE_PREDICT.face_predict(1))
     elif type == "2":
         if opt == 1:
-            return (VOICE_PREDICT.voice_predict(2)+FACE_PREDICT.face_predict(2))/2
+            return (float(VOICE_PREDICT.voice_predict(2))+float(FACE_PREDICT.face_predict(2)))/2
         elif opt == 2:
             return (VOICE_PREDICT.voice_predict(2))
         elif opt == 3:

@@ -24,6 +24,7 @@ def face_predict(case):
     predictions = face_model.predict(img)
 
     emotion_index = case - 1
+    #print(predictions[0][emotion_index] * 100)
     return f"{predictions[0][emotion_index] * 100:.2f}"
 
     # for i, emotion in enumerate(emotion_classes):

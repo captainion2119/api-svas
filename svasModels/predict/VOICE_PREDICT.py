@@ -32,6 +32,7 @@ def voice_predict(case):
     predicted_probabilities = voice_model.predict(np.expand_dims(test_features, axis=0))
 
     emotion_index = case - 1
+    #print(predicted_probabilities[0][emotion_index] * 100)
     return f"{predicted_probabilities[0][emotion_index] * 100:.2f}"
 
     # class_labels = emotions
@@ -42,8 +43,8 @@ def voice_predict(case):
     #     print(f"Probability of {class_label}: {probability:.2f}")
 
 # 1 -> anxiety
-# 3 -> happiness
 # 2 -> depression
+# 3 -> happiness
 
 # print(voice_predict(1))
 # print(voice_predict(2))
