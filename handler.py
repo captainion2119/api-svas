@@ -1,4 +1,4 @@
-from svasModels.predict import VOICE_PREDICT, FACE_PREDICT, DEP_FA_VO_TE
+from svasModels.predict import VOICE_PREDICT, FACE_PREDICT, DEP_FA_VO_TE, TEXT_PREDICT
 
 
 def test_type(type,opt):
@@ -20,10 +20,10 @@ def test_type(type,opt):
         elif opt == 4:
             return (DEP_FA_VO_TE.get_depression_level())
         elif opt == 5:
-            return "TEXT ONLY MODEL TO BE IMPLEMENTED"
+            return (TEXT_PREDICT.predict_depression())
         elif opt == 6:
-            return "AUDIO + TEXT TO BE IMPLEMENTED"
+            return (float(VOICE_PREDICT.voice_predict(2))+TEXT_PREDICT.predict_depression())/2
         elif opt == 7:
-            return "IMAGE + TEXT TO BE IMPLEMENTED"
+            return (float(FACE_PREDICT.face_predict(2))+TEXT_PREDICT.predict_depression())/2
 
 #test_type(1,1)
